@@ -90,3 +90,28 @@ plt.xlabel('Longitude')
 cbar = plt.colorbar()
 cbar.set_label('Magnetic field intensity (nT)', rotation=270, labelpad=20)
 plt.show()
+
+plt.figure(figsize=(16,5))
+
+# Interpolate for plotting
+plt.subplot(121)
+zi = griddata((LON, LAT), ALT, (LON[None,:], LAT[:,None]), method='cubic')
+zi[zi==0] = np.nan
+# Create the contour plot
+CS2 = plt.contour(LON, LAT, zi, 15, cmap=plt.cm.rainbow)
+CS = plt.contourf(LON, LAT, zi, 15, cmap=plt.cm.rainbow)
+plt.ylabel('Latitude')
+plt.xlabel('Longitude')
+cbar = plt.colorbar()
+cbar.set_label('Mean meters over sea level', rotation=270, labelpad=20)
+plt.subplot(122)
+wi = griddata((LON, LAT), FIELD, (LON[None,:], LAT[:,None]), method='cubic')
+wi[wi==0] = np.nan
+# Create the contour plot
+CS2 = plt.contour(LON, LAT, wi, 15, cmap=plt.cm.rainbow)
+CS = plt.contourf(LON, LAT, wi, 15, cmap=plt.cm.rainbow)
+plt.ylabel('Latitude')
+plt.xlabel('Longitude')
+cbar = plt.colorbar()
+cbar.set_label('Magnetic field intensity (nT)', rotation=270, labelpad=20)
+plt.show()
